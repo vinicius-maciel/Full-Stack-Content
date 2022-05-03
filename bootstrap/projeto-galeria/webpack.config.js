@@ -9,7 +9,7 @@ module.exports = {
     mode: modoDev ? 'development' : 'production',
     entry: './src/index.js',
     devServer: {
-        contentBase: './build',
+        static: './build',
         port: 9000,
     },
     optimization: {
@@ -25,14 +25,21 @@ module.exports = {
     output: {
         filename: 'app.js',
         path: __dirname + '/build'
+
     },
+
     plugins: [
         new MiniCssExtractPlugin({ filename: 'estilo.css' }),
-        new CopyWebpackPlugin([
-            { context: 'src/', from: '**/*.html' },
-            { context: 'src/', from: 'imgs/**/*' }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                { context: 'src/', from: '**/*.html' },
+                { context: 'src/', from: 'imgs/**/*' }
+
+            ],
+
+        }),
     ],
+
     module: {
         rules: [{
             test: /\.s?[ac]ss$/,
